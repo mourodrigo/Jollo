@@ -3,15 +3,13 @@
 //  Jollo
 //
 //  Created by Rodrigo on 26/02/15.
-//  Copyright (c) 2015 rodrigo. All rights reserved.
-//
+//  Copyright (c) 2015 MouRodrigo. All rights reserved.
+//https://github.com/mourodrigo/Jollo
 
 #include <iostream>
 using namespace std;
 
 #define maior(a, b, c) ( ((a) < (b)) && ((b) < (c)) )
-#define validaParametro(a) (a>0)
-//,atoi(    [5]),atoi(argv[6])
 void atribuiOrdenado(int * array, int a, int b, int c){
     
     if (maior(a,b,c)) {
@@ -55,13 +53,11 @@ int getLowest(int * array, int lowest){
     return -1;
 }
 
-bool validaParametros(int argc, const char * argv[]){
+bool validaParametros(int argc, int * argv){
     for (int u = 0; u<argc; u++) {
-        if (u > 0) {
+        if (argv[u] > 0) {
             for (int y = 0; u<argc; u++) {
-                if (argv[y]==argv[u]) {
-                    return false;
-                }
+                if (argv[y]==argv[u]) return false;
             }
         }else{
             return false;
@@ -71,9 +67,8 @@ bool validaParametros(int argc, const char * argv[]){
 }
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    if (argc==6 && validaParametros(argc, argv)){
-        int array[5];//,pmenor, pmaior;
+    if (argc==6){
+        int array[5];
         atribuiOrdenado(array, atoi(argv[1]),atoi(argv[2]), atoi(argv[3]));
         if (argv[3]>argv[5]) {
             array[4] = atoi(argv[4]);
@@ -82,13 +77,13 @@ int main(int argc, const char * argv[]) {
             array[4] = atoi(argv[5]);
             array[3] = atoi(argv[4]);
         }
-        if (array[3]>array[0] && array[4]>array[1]) {
-            cout << getLowest(array, array[1]);
-        }else if(array[3]<array[0] && array[4]<array[1]){
-            cout << getLowest(array, array[2]);
-        }else{
-            cout << "-1";
-        }
+        if (!validaParametros(argc, array)) return 0;
+
+        if (array[3]>array[0] && array[4]>array[1]) cout << getLowest(array, array[1]);
+        
+        else if(array[3]<array[0] && array[4]<array[1]) cout << getLowest(array, array[2]);
+        
+        else cout << "-1";
     }
     return 0;
 }
